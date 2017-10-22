@@ -1,157 +1,149 @@
 package com.crazybun.view;
 
-import java.awt.FileDialog;
-import java.awt.Font;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import com.crazybun.utils.TxtUtil;
+
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import com.crazybun.utils.TxtUtil;
-
 public class TXTSplitView {
-	private static String path;
-	private static String fileType;
-	private static int count = 5;
+    private static String path;
+    private static String fileType;
+    private static int count = 5;
 
-	public static void main(String[] args) {
-		init();
-	}
+    public static void main(String[] args) {
+        init();
+    }
 
-	private static void init() {
-		JFrame fpath = new JFrame("´óTXTÎÄ¼ş·Ö¸î");
-		GridBagLayout gridbag = new GridBagLayout();
-		GridBagConstraints c = new GridBagConstraints();
-		ActionListener btnFileAL;
-		ActionListener btnStartAL;
-		DocumentListener numTL;
-		JLabel tip1 = new JLabel("´ı·Ö¸îµÄTXTÎÄ¼şÂ·¾¶£º");// ±êÇ©
-		JLabel jpath = new JLabel("ÇëÑ¡ÔñÒª·Ö¸îµÄTXTÎÄ¼şÂ·¾¶...");
-		JButton btnFile = new JButton("ä¯ÀÀ");
-		JLabel tip_directory = new JLabel("TXT±£´æÎ»ÖÃ£º");
-		JLabel tip_count = new JLabel("·Ö¸îÊıÁ¿£º");
-		JTextField num = new JTextField("5");
-		JLabel directory = new JLabel("");
-		JButton btnStart = new JButton("¿ªÊ¼");
+    private static void init() {
+        JFrame fpath = new JFrame("å¤§TXTæ–‡ä»¶åˆ†å‰²");
+        GridBagLayout gridbag = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+        ActionListener btnFileAL;
+        ActionListener btnStartAL;
+        DocumentListener numTL;
+        JLabel tip1 = new JLabel("å¾…åˆ†å‰²çš„TXTæ–‡ä»¶è·¯å¾„ï¼š");// æ ‡ç­¾
+        JLabel jpath = new JLabel("è¯·é€‰æ‹©è¦åˆ†å‰²çš„TXTæ–‡ä»¶è·¯å¾„...");
+        JButton btnFile = new JButton("æµè§ˆ");
+        JLabel tip_directory = new JLabel("TXTä¿å­˜ä½ç½®ï¼š");
+        JLabel tip_count = new JLabel("åˆ†å‰²æ•°é‡ï¼š");
+        JTextField num = new JTextField("5");
+        JLabel directory = new JLabel("");
+        JButton btnStart = new JButton("å¼€å§‹");
 
-		btnFileAL = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				FileDialog fd = new FileDialog(new Frame(), "ÇëÑ¡ÔñÒª·Ö¸îµÄtxtÎÄ¼ş", FileDialog.LOAD);
-				fd.setVisible(true);
-				path = fd.getDirectory() + fd.getFile();
-				fileType = path.substring(path.length() - 3, path.length());
-				if (fileType.toLowerCase().equals("txt")) {
-					jpath.setText(path);
-					btnStart.setEnabled(true);
-				} else {
-					jpath.setText("ÇëÑ¡Ôñ.txt¸ñÊ½µÄÎÄ¼ş£¡");
-					btnStart.setEnabled(false);
-				}
-				directory.setText(fd.getDirectory());
-			}
-		};
+        btnFileAL = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FileDialog fd = new FileDialog(new Frame(), "è¯·é€‰æ‹©è¦åˆ†å‰²çš„txtæ–‡ä»¶", FileDialog.LOAD);
+                fd.setVisible(true);
+                path = fd.getDirectory() + fd.getFile();
+                fileType = path.substring(path.length() - 3, path.length());
+                if (fileType.toLowerCase().equals("txt")) {
+                    jpath.setText(path);
+                    btnStart.setEnabled(true);
+                } else {
+                    jpath.setText("è¯·é€‰æ‹©.txtæ ¼å¼çš„æ–‡ä»¶ï¼");
+                    btnStart.setEnabled(false);
+                }
+                directory.setText(fd.getDirectory());
+            }
+        };
 
-		numTL = new DocumentListener() {
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				count = Integer.valueOf(num.getText());
-				System.out.println(count);
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				count = Integer.valueOf(num.getText());
-				System.out.println(count);
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				count = Integer.valueOf(num.getText());
-				System.out.println(count);
-			}
-		};
-				
+        numTL = new DocumentListener() {
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                count = Integer.valueOf(num.getText());
+                System.out.println(count);
+            }
 
-		btnStartAL = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				TxtUtil.splitTxt(path, count);
-			}
-		};
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                count = Integer.valueOf(num.getText());
+                System.out.println(count);
+            }
 
-		fpath.setFont(new Font("¿¬Ìå", Font.PLAIN, 24));
-		fpath.setLayout(gridbag);
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                count = Integer.valueOf(num.getText());
+                System.out.println(count);
+            }
+        };
 
-		// ¶ÔµÚÒ»¸ö¿Ø¼ş½øĞĞÔ¼Êø
-		c.fill = GridBagConstraints.BOTH;
-		c.weightx = 2.0;// ÉèÖÃË®Æ½·½Ïò·Ö²¼µÄÈ¨ÖØ
-		c.gridwidth = 2;
-		c.gridheight = 1;
-		c.insets = new Insets(20, 20, 0, 0);// ÉèÖÃÓëÉÏ×óÏÂÓÒ×é¼ş¼äµÄ±ß¾à
-		// tip1.setSize(100, 30);
-		gridbag.setConstraints(tip1, c);
-		fpath.add(tip1);
 
-		// ¶ÔµÚ¶ş¸ö¿Ø¼ş½øĞĞÔ¼Êø
-		c.weightx = 6.0;
-		c.insets = new Insets(20, 20, 0, 0);// ÉèÖÃÓëÉÏÏÂ×óÓÒ×é¼ş¼äµÄ±ß¾à
-		gridbag.setConstraints(jpath, c);
-		fpath.add(jpath);
+        btnStartAL = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TxtUtil.splitTxt(path, count);
+            }
+        };
 
-		// ¶ÔµÚÈı¸ö¿Ø¼ş½øĞĞÔ¼Êø
-		c.weightx = 1.0;
-		c.insets = new Insets(20, 20, 0, 20);
-		c.gridwidth = GridBagConstraints.REMAINDER;
-		btnFile.addActionListener(btnFileAL);
-		gridbag.setConstraints(btnFile, c);
-		fpath.add(btnFile);
+        fpath.setFont(new Font("æ¥·ä½“", Font.PLAIN, 24));
+        fpath.setLayout(gridbag);
 
-		// ÖØÖÃÈ¨ÖØ£¬ÁíÆğÒ»ĞĞ
-		// ¶ÔµÚ¶şĞĞµÚÒ»¸ö¿Ø¼ş½øĞĞÔ¼Êø
-		c.weightx = 2.0;
-		c.insets = new Insets(20, 20, 0, 0);
-		gridbag.setConstraints(tip_directory, c);
-		fpath.add(tip_directory);
+        // å¯¹ç¬¬ä¸€ä¸ªæ§ä»¶è¿›è¡Œçº¦æŸ
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 2.0;// è®¾ç½®æ°´å¹³æ–¹å‘åˆ†å¸ƒçš„æƒé‡
+        c.gridwidth = 2;
+        c.gridheight = 1;
+        c.insets = new Insets(20, 20, 0, 0);// è®¾ç½®ä¸ä¸Šå·¦ä¸‹å³ç»„ä»¶é—´çš„è¾¹è·
+        // tip1.setSize(100, 30);
+        gridbag.setConstraints(tip1, c);
+        fpath.add(tip1);
 
-		// ¶ÔµÚ¶şĞĞµÚ¶ş¸ö¿Ø¼ş½øĞĞÔ¼Êø
-		c.weightx = 7.0;
-		c.insets = new Insets(20, 20, 0, 20);
-		c.gridwidth = GridBagConstraints.REMAINDER;
-		gridbag.setConstraints(directory, c);
-		fpath.add(directory);
-		
-		c.weightx = 7.0;
-		c.insets = new Insets(20, 20, 0, 20);
-		c.gridwidth = GridBagConstraints.REMAINDER;
-		gridbag.setConstraints(tip_count, c);
-		fpath.add(tip_count);
-		
-		c.weightx = 7.0;
-		c.insets = new Insets(20, 20, 0, 20);
-		c.gridwidth = GridBagConstraints.REMAINDER;
-		num.getDocument().addDocumentListener(numTL);;
-		gridbag.setConstraints(num, c);
-		fpath.add(num);
+        // å¯¹ç¬¬äºŒä¸ªæ§ä»¶è¿›è¡Œçº¦æŸ
+        c.weightx = 6.0;
+        c.insets = new Insets(20, 20, 0, 0);// è®¾ç½®ä¸ä¸Šä¸‹å·¦å³ç»„ä»¶é—´çš„è¾¹è·
+        gridbag.setConstraints(jpath, c);
+        fpath.add(jpath);
 
-		// ÁíÆğÒ»ĞĞ¶Ô¸Ã¿Ø¼ş½øĞĞÔ¼Êø
-		c.weightx = 0;
-		c.insets = new Insets(0, 200, 20, 200);
-		btnStart.addActionListener(btnStartAL);
-		btnStart.setEnabled(false);
-		gridbag.setConstraints(btnStart, c);
-		fpath.add(btnStart);
+        // å¯¹ç¬¬ä¸‰ä¸ªæ§ä»¶è¿›è¡Œçº¦æŸ
+        c.weightx = 1.0;
+        c.insets = new Insets(20, 20, 0, 20);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        btnFile.addActionListener(btnFileAL);
+        gridbag.setConstraints(btnFile, c);
+        fpath.add(btnFile);
 
-		fpath.setVisible(true);
-		fpath.setSize(600, 200);
-	}
+        // é‡ç½®æƒé‡ï¼Œå¦èµ·ä¸€è¡Œ
+        // å¯¹ç¬¬äºŒè¡Œç¬¬ä¸€ä¸ªæ§ä»¶è¿›è¡Œçº¦æŸ
+        c.weightx = 2.0;
+        c.insets = new Insets(20, 20, 0, 0);
+        gridbag.setConstraints(tip_directory, c);
+        fpath.add(tip_directory);
+
+        // å¯¹ç¬¬äºŒè¡Œç¬¬äºŒä¸ªæ§ä»¶è¿›è¡Œçº¦æŸ
+        c.weightx = 7.0;
+        c.insets = new Insets(20, 20, 0, 20);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        gridbag.setConstraints(directory, c);
+        fpath.add(directory);
+
+        c.weightx = 7.0;
+        c.insets = new Insets(20, 20, 0, 20);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        gridbag.setConstraints(tip_count, c);
+        fpath.add(tip_count);
+
+        c.weightx = 7.0;
+        c.insets = new Insets(20, 20, 0, 20);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        num.getDocument().addDocumentListener(numTL);
+        ;
+        gridbag.setConstraints(num, c);
+        fpath.add(num);
+
+        // å¦èµ·ä¸€è¡Œå¯¹è¯¥æ§ä»¶è¿›è¡Œçº¦æŸ
+        c.weightx = 0;
+        c.insets = new Insets(0, 200, 20, 200);
+        btnStart.addActionListener(btnStartAL);
+        btnStart.setEnabled(false);
+        gridbag.setConstraints(btnStart, c);
+        fpath.add(btnStart);
+
+        fpath.setVisible(true);
+        fpath.setSize(600, 200);
+    }
 }

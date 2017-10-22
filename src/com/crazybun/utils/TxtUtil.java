@@ -1,49 +1,46 @@
 package com.crazybun.utils;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TxtUtil {
-	/**
-	 * Æ½¾ù·Ö¸îÒ»¸öTXTÎÄ¼ş£¨×¢Òâ£º»á´òÂÒĞĞµÄË³Ğò£¡£©
-	 * @param path ÎÄ¼şÂ·¾¶
-	 * @param fname TXTÃû³Æ
-	 * @param count ·ÖÎª¼¸·İ
-	 */
-	public static void splitTxt(String path, String fname, int count) {
-		try {
-			FileReader read = new FileReader(path + fname);
-			@SuppressWarnings("resource")
-			BufferedReader br = new BufferedReader(read);
-			String row;
-			List<FileWriter> flist = new ArrayList<FileWriter>();
-			for (int i = 0; i < count; i++) {
-				flist.add(new FileWriter(path + "text" + i + ".txt"));
-			}
-			int rownum = 1;
-			while ((row = br.readLine()) != null) {
-				flist.get(rownum % count).append(row + "\r\n");
-				rownum++;
-			}
-			for (int i = 0; i < flist.size(); i++) {
-				flist.get(i).close();
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void splitTxt(String fullPath, int count) {
-		int index = fullPath.indexOf("\\");
-		String path = fullPath.substring(0, index);
-		String fname = fullPath.substring(index);
-		splitTxt(path, fname, count);
-	}
+    /**
+     * å¹³å‡åˆ†å‰²ä¸€ä¸ªTXTæ–‡ä»¶ï¼ˆæ³¨æ„ï¼šä¼šæ‰“ä¹±è¡Œçš„é¡ºåºï¼ï¼‰
+     *
+     * @param path  æ–‡ä»¶è·¯å¾„
+     * @param fname TXTåç§°
+     * @param count åˆ†ä¸ºå‡ ä»½
+     */
+    public static void splitTxt(String path, String fname, int count) {
+        try {
+            FileReader read = new FileReader(path + fname);
+            @SuppressWarnings("resource")
+            BufferedReader br = new BufferedReader(read);
+            String row;
+            List<FileWriter> flist = new ArrayList<FileWriter>();
+            for (int i = 0; i < count; i++) {
+                flist.add(new FileWriter(path + "text" + i + ".txt"));
+            }
+            int rownum = 1;
+            while ((row = br.readLine()) != null) {
+                flist.get(rownum % count).append(row + "\r\n");
+                rownum++;
+            }
+            for (int i = 0; i < flist.size(); i++) {
+                flist.get(i).close();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void splitTxt(String fullPath, int count) {
+        int index = fullPath.indexOf("\\");
+        String path = fullPath.substring(0, index);
+        String fname = fullPath.substring(index);
+        splitTxt(path, fname, count);
+    }
 }
